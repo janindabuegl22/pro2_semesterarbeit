@@ -1,0 +1,56 @@
+{
+    "2023-05-09 17:51:10.351380": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "geschlecht": "m\u00e4nnlich",
+        "mageninhalt": "empty",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "1",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "1",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "1",
+                "art": "Sekt"
+            },
+            {
+                "anzahl": "1",
+                "art": "Schnaps"
+            }
+        ]
+    },
+    "2023-05-09 18:01:48.558268": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "geschlecht": "m\u00e4nnlich",
+        "mageninhalt": "empty",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "2",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "2",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "2",
+                "art": "Sekt"
+            },
+            {
+                "anzahl": "2",
+                "art": "Schnaps"
+            }
+        ]
+    }
+}
