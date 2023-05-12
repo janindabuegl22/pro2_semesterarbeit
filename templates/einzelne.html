@@ -195,25 +195,30 @@
     </div>
 </nav>
 
-<form action="/neue_eingabe" method="post" autocomplete="off">
-    <h2>Hallo {{ name }}, Hier erhälst du eine Auflistung deiner Getränke</h2>
+<h2>Hallo {{ name }}, Hier erhälst du eine Auflistung deiner Getränke</h2>
 
-<table>
-  <tr>
-    <th>Getränk</th>
-    <th>Anzahl</th>
-    <th>Uhrzeit</th>
-    <th>Promille</th>
-  </tr>
-  {% for row in rows %}
-    <tr>
-      <td>{{ row[0] }}</td>
-      <td>{{ row[1] }}</td>
-      <td>{{ row[2] }}</td>
-      <td>{{ row[3] }}</td>
-    </tr>
-  {% endfor %}
-</table>
-
-
+{% if rows %}
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Getränk</th>
+                <th>Anzahl</th>
+                <th>Uhrzeit</th>
+                <th>Promille</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+                <tr>
+                    <td>{{ row[0] }}</td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[3] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <h5>Keine Getraenke vorhanden</h5>
+{% endif %}
 

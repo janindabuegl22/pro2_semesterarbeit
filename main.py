@@ -9,6 +9,8 @@ from func.datenbank import read, write
 
 app = Flask(__name__)
 
+latest_drink_record = {}
+
 
 @app.route("/home")
 def index():
@@ -18,6 +20,8 @@ def index():
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
 def eingabe():
+    global latest_drink_record
+
     if request.method == "POST":
         groesse = request.form.get('groesse')
         gewicht = request.form.get('gewicht')
@@ -50,7 +54,8 @@ def eingabe():
             timestamp = datetime.now()
 
             write('daten/saved_drinks.json', str(timestamp), daten)
-            return redirect(url_for('read_saved_drinks'))  # redirect
+            latest_drink_record = daten
+            return redirect(url_for('einzelne'))  # redirect
         else:
             return "Bitte alle Felder ausfüllen."
     return render_template("formular.html", name="Jan", eingabe_url=url_for('eingabe'))
@@ -59,57 +64,89 @@ def eingabe():
 @app.route("/statistik")
 def read_saved_drinks():
     drinks = read('daten/saved_drinks.json')
-    if not ('daten' in drinks and 'getraenke' in drinks['daten']):
+    if not drinks:
         return "No drinks found."
-    gewicht = float(drinks['daten']['gewicht'])
+    drinks_stats = get_drinks_stats(drinks)
+
+    return render_template('statistik.html', drinks_stats=drinks_stats)
+
+
+def get_promille(gewicht, drink):
     vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.12}
-    drinks_list = get_drink_list(drinks, gewicht, vol)
-    avg_promille = get_avg_promille(drinks, gewicht, vol)
+    art = drink['art']
+    anzahl = float(drink['anzahl'])
+    promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)
+    return promille
 
-    return render_template('statistik.html', drinks=drinks_list, avg_promille=avg_promille, ds_promille=avg_promille["alles"]["total_promille"])
 
-def get_drink_list(drinks, gewicht, vol):
-    drink_list = []
+def get_drinks_stats(drinks):
+    drinks_stats = []
     for timestamp, daten in drinks.items():
-        getraenke = daten["getraenke"]
+        total_drinks = 0
+        total_promille = 0
+        drink_summary = {}
+        gewicht = float(daten['gewicht'])
+        getraenke = daten['getraenke']
         for drink in getraenke:
-            anzahl = float(drink['anzahl'])
-            art = drink["art"]
-            promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)
-            drink_list.append({
-                "art": art,
-                "anzahl": anzahl,
-                "promille": '%.2f' % promille
-            })
-    return drink_list
+            total_drinks += float(drink['anzahl'])
+            total_promille += get_promille(gewicht, drink)
+        drink_summary['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y, %H:%M')
+        drink_summary['start'] = daten['start']
+        drink_summary['end'] = daten['end']
+        drink_summary['total_drinks'] = total_drinks
+        drink_summary['total_promille'] = total_promille
+        drinks_stats.append(drink_summary)
+    return drinks_stats
 
-def get_avg_promille(drinks, gewicht, vol):
-    total_promille_dict = {"alles": {"total_promille": 0, "anzahl": 0}}
-    for timestamp, daten in drinks.items():
-        getraenke = daten["getraenke"]
-        for drink in getraenke:
-            anzahl = float(drink['anzahl'])
-            art = drink["art"]
-            if art not in total_promille_dict:
-                total_promille_dict[art] = {"total_promille": 0, "anzahl": 0}
 
-            promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)
-            total_promille_dict[art]["total_promille"] += promille
-            total_promille_dict[art]["anzahl"] += 1
-            total_promille_dict["alles"]["total_promille"] += promille
-            total_promille_dict["alles"]["anzahl"] += 1
+# def get_drink_list(drinks):
+#     drink_list = []
+#     for timestamp, daten in drinks.items():
+#         gewicht = float(daten['gewicht'])
+#         getraenke = daten["getraenke"]
+#         for drink in getraenke:
+#             anzahl = float(drink['anzahl'])
+#             art = drink["art"]
+#             promille = get_promille(gewicht, drink)
+#             drink_list.append({
+#                 "art": art,
+#                 "anzahl": anzahl,
+#                 "promille": '%.2f' % promille
+#             })
+#     return drink_list
 
-    return total_promille_dict
+# def get_avg_promille(drinks):
+#     total_promille_dict = {"alles": {"total_promille": 0, "anzahl": 0}}
+#     for timestamp, daten in drinks.items():
+#         gewicht = float(daten['gewicht'])
+#         getraenke = daten["getraenke"]
+#         for drink in getraenke:
+#             anzahl = float(drink['anzahl'])
+#             art = drink["art"]
+#             if art not in total_promille_dict:
+#                 total_promille_dict[art] = {"total_promille": 0, "anzahl": 0}
+#
+#             promille = get_promille(gewicht, drink)
+#             total_promille_dict[art]["total_promille"] += promille
+#             total_promille_dict[art]["anzahl"] += 1
+#             total_promille_dict["alles"]["total_promille"] += promille
+#             total_promille_dict["alles"]["anzahl"] += 1
+#
+#     return total_promille_dict
 
 @app.route("/einzelne")
 def einzelne():
-    drinks = read('daten/saved_drinks.json')
+    global latest_drink_record
+
+    daten = latest_drink_record
     rows = []
-    for timestamp, daten in drinks.items():
+    if daten:
+        gewicht = float(daten['gewicht'])
         uhrzeit = daten['start']
         getraenke = daten['getraenke']
         for drink in getraenke:
-            row = [drink['art'], drink['anzahl'], uhrzeit]
+            promille = get_promille(gewicht, drink)
+            row = [drink['art'], drink['anzahl'], uhrzeit, promille]
             rows.append(row)
     return render_template('einzelne.html', rows=rows)
 
@@ -123,3 +160,4 @@ def graph():
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
+

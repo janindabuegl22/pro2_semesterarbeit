@@ -186,41 +186,32 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/einzelne">Einzelne Auswertungen</a>
                 </li>
-                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-Zusammenfassung
-<table>
-    <tr>
-        <th>Getränk</th>
-        <th>Anzahl</th>
-        <th>Promille</th>
-    </tr>
-    {% for art, drink in avg_promille.items() %}
+<h2>Zusammenfassung</h2>
+<table class="table table-striped table-bordered">
+    <thead>
         <tr>
-            <td>{{ art }}</td>
-            <td>{{ drink['anzahl'] }}</td>
-            <td>{{ drink['total_promille'] }}</td>
+            <th>Date & Time</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Quantaty of Drinks</th>
+            <th>Durchnitt Promille</th>
         </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+        {% for drink in drinks_stats %}
+            <tr>
+                <td>{{ drink['timestamp'] }}</td>
+                <td>{{ drink['start'] }}</td>
+                <td>{{ drink['end'] }}</td>
+                <td>{{ drink['total_drinks'] }}</td>
+                <td>{{ drink['total_promille'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
 
-    Durchnitt Promille: {{ ds_promille }}
-
- <table>
-    <tr>
-        <th>Getränk</th>
-        <th>Anzahl</th>
-        <th>Promille</th>
-    </tr>
-    {% for drink in drinks %}
-        <tr>
-            <td>{{ drink['art'] }}</td>
-            <td>{{ drink['anzahl'] }}</td>
-            <td>{{ drink['promille'] }}</td>
-        </tr>
-    {% endfor %}
-</table>
