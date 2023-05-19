@@ -14,8 +14,8 @@ latest_drink_record = {}
 
 @app.route("/home")
 def index():
-    tipps = ["Tipp 1", "Tipp 2", "Tipp 3"]
-    return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), tipp=random.choice(tipps))
+    drinkoftheday = ["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"]
+    return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), drinkoftheday=random.choice(drinkoftheday))
 
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
@@ -27,13 +27,12 @@ def eingabe():
         gewicht = request.form.get('gewicht')
         alter = request.form.get('alter')
         geschlecht = request.form.get('geschlecht')
-        mageninhalt = request.form.get('f[stomach]')
         start = request.form.get('start')
         end = request.form.get('end')
         anzahl = request.form.getlist('anzahl[]')
         art = request.form.getlist('art[]')
 
-        if groesse and gewicht and alter and geschlecht and mageninhalt and start and end and all(anzahl) and all(art):
+        if groesse and gewicht and alter and geschlecht and start and end and all(anzahl) and all(art):
             getraenke_list = []
             for i in range(4):
                 if anzahl[i] and art[i]:
@@ -46,7 +45,6 @@ def eingabe():
                 "gewicht": gewicht,
                 "alter": alter,
                 "geschlecht": geschlecht,
-                "mageninhalt": mageninhalt,
                 "start": start,
                 "end": end,
                 "getraenke": getraenke_list
@@ -72,7 +70,7 @@ def read_saved_drinks():
 
 
 def get_promille(gewicht, drink):
-    vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.12}
+    vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.40}
     art = drink['art']
     anzahl = float(drink['anzahl'])
     promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)
@@ -160,4 +158,3 @@ def graph():
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
-
