@@ -4,6 +4,8 @@ from flask import Flask, render_template, request, url_for, redirect
 import random
 import plotly.express as px
 from plotly.offline import plot
+import plotly.graph_objects as go
+import plotly.io as pio
 
 from func.datenbank import read, write
 
@@ -148,13 +150,24 @@ def einzelne():
             rows.append(row)
     return render_template('einzelne.html', rows=rows)
 
-
-@app.route("/graph")
+@app.route("/graph", methods=['GET'])
 def graph():
-    fig = px.line(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
-    div = plot(fig, output_type="div")
-    return render_template('graph.html', die_grafik=div)
+    timestamps = []
+    promille = []
+    drinks_stats = get_drinks_stats()  # Funktion zum Abrufen der Statistikdaten implementieren
 
+    # Extrahiere timestamps und promille aus den drinks_stats
+    for drink in drinks_stats:
+        timestamps.append(drink['timestamp'])
+        promille.append(drink['total_promille'])
+
+    # Erstelle Plotly-Grafik
+    fig = go.Figure(data=go.Scatter(x=timestamps, y=promille, mode='lines'))
+
+    # Konvertiere die Grafik in einen HTML-String
+    plot_html = pio.to_html(fig, full_html=False)
+
+    return render_template('graph.html', die_grafik=plot_html, drinks_stats=drinks_stats)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

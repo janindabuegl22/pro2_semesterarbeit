@@ -189,11 +189,17 @@
     </div>
 </nav>
 
-<main class="container">
+    <main class="container">
+        <div class="bg-light p-5 rounded">
+            <h1>Deine Statistik in einem Graph</h1>
+            <p class="lead">{{ die_grafik | safe }}</p>
+        </div>
 
-   <div class="bg-light p-5 rounded">
-    <h1>Deine Statistik in einem Graph</h1>
-    <p>{{ die_grafik | safe }}</p>
-  </div>
-</main>
+        <form id="data-form" action="{{ url_for('graph') }}" method="POST">
+            {% for drink in drinks_stats %}
+                <input type="hidden" name="timestamps[]" value="{{ drink['timestamp'] }}">
+                <input type="hidden" name="promille[]" value="{{ drink['total_promille'] }}">
+            {% endfor %}
+        </form>
+    </main>
 
