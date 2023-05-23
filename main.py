@@ -5,9 +5,7 @@ from flask import Flask, render_template, request, url_for, redirect
 import random
 import plotly.express as px
 from plotly.offline import plot
-import plotly.graph_objects as go
-import plotly.io as pio
-import json
+
 
 
 from func.datenbank import read, write
@@ -19,29 +17,31 @@ latest_drink_record = {}
 
 @app.route("/home")
 def index():
+    # Eine Liste von Getränken
     drinkoftheday = ["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"]
+    # Render die Template-Datei "index.html" und übergebe den Wert für die Variable "name" als "Jan".
+    # Zusätzlich wird die URL für die Funktion "eingabe" erzeugt und als "eingabe_url" übergeben.
+    # Ein Getränk wird aus der Liste "drinkoftheday" ausgewählt und an das Template übergeben.
     return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), drinkoftheday=random.choice(drinkoftheday))
-
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
 def eingabe():
     global latest_drink_record
 
     if request.method == "POST":
-        groesse = request.form.get('groesse')
-        gewicht = request.form.get('gewicht')
-        alter = request.form.get('alter')
-        geschlecht = request.form.get('geschlecht')
-        start = request.form.get('start')
-        end = request.form.get('end')
-        anzahl = request.form.getlist('anzahl[]')
-        art = request.form.getlist('art[]')
+        groesse = request.form.get('groesse')  # Wert des Formularfelds 'groesse' abrufen
+        gewicht = request.form.get('gewicht')  # Wert des Formularfelds 'gewicht' abrufen
+        alter = request.form.get('alter')  # Wert des Formularfelds 'alter' abrufen
+        start = request.form.get('start')  # Wert des Formularfelds 'start' abrufen
+        end = request.form.get('end')  # Wert des Formularfelds 'end' abrufen
+        anzahl = request.form.getlist('anzahl[]')  # Liste der Werte des Formularfelds 'anzahl[]' abrufen
+        art = request.form.getlist('art[]')  # Liste der Werte des Formularfelds 'art[]' abrufen
 
-        if groesse and gewicht and alter and geschlecht and start and end and all(anzahl) and all(art):
-            getraenke_list = []
+        if groesse and gewicht and alter and start and end and all(anzahl) and all(art): # Überprüfung, ob alle Felder ausgefüllt sind
+            getraenke_list = [] # Erstellen einer neuen Liste, um diese mit den Getränken zu füllen und diese zusammen an daten zu senden (unten)
             for i in range(4):
                 if anzahl[i] and art[i]:
-                    getraenke_list.append({
+                    getraenke_list.append({ # Hier wird die Liste gefüllt
                         "anzahl": anzahl[i],
                         "art": art[i]
                     })
@@ -49,42 +49,43 @@ def eingabe():
                 "groesse": groesse,
                 "gewicht": gewicht,
                 "alter": alter,
-                "geschlecht": geschlecht,
                 "start": start,
                 "end": end,
-                "getraenke": getraenke_list
+                "getraenke": getraenke_list # Hier wird die Liste übergeben
             }
-            timestamp = datetime.now()
-
+            timestamp = datetime.now() # Zeitstempel erstellen
+            # Zeitstempel und Daten an json Datei übergeben. Wird seperat übergeben, damit dict getraenke in dict timestamp ist.
             write('daten/saved_drinks.json', str(timestamp), daten)
             latest_drink_record = daten
-            return redirect(url_for('einzelne'))  # redirect
+            # Durch globale Variable kann der aktualisierte Wert von latest_drink_record an andere Teile des Codes weitergegeben werden
+            return redirect(url_for('einzelne'))  # Umleitung zur Route 'einzelne', damit man gleich das Ergebnis der Eingabe sieht
         else:
-            return "Bitte alle Felder ausfüllen."
+            return "Bitte alle Felder ausfüllen." # Sollten nicht alle Felder ausgefüllt sein
     return render_template("formular.html", name="Jan", eingabe_url=url_for('eingabe'))
 
 
 @app.route("/statistik")
+
 def read_saved_drinks():
-    drinks = read('daten/saved_drinks.json')
-    if not drinks:
+    drinks = read('daten/saved_drinks.json')    # Lesen der Daten in saved_drinks
+    if not drinks:                              # Wenn keine Drinks vorhanden sind, dann wird das returned
         return "No drinks found."
-    drinks_stats = get_drinks_stats(drinks)
+    drinks_stats = get_drinks_stats(drinks)     # Wenn Variabel nicht leer ist, wird get_drink_stats aufgerufen. Das Ergebnis wird an drink_stats gesendet.
 
-    x = [drink_summary['timestamp'] for drink_summary in drinks_stats]
-    y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]
+    x = [drink_summary['timestamp'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
+    y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
 
-    fig = px.line(x=x, y=y, labels={"x": "timestamp", "y": "total_drinks"})
+    fig = px.line(x=x, y=y, labels={"x": "Datum", "y": "Gesamthafte Getränke"})     # Festlegen der Variabeln (verbal)
     div = plot(fig, output_type="div")
 
     return render_template('statistik.html', drinks_stats=drinks_stats, die_grafik=div)
 
 
-def get_promille(gewicht, drink):
-    vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.40}
-    art = drink['art']
-    anzahl = float(drink['anzahl'])
-    promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)
+def get_promille(gewicht, drink):                                       # Wird in Zeile 101 und 122 aufgerufen
+    vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.40}   # Die eigentliche Berechnung der Promille
+    art = drink['art']                                                  # Gibt den Typen des Getränks an
+    anzahl = float(drink['anzahl'])                                     # Gibt die Anzahl der Getränke an
+    promille = anzahl * vol[art] * 0.8 / (gewicht * 0.6)                # Berechnet die Promille
     return promille
 
 
@@ -103,46 +104,10 @@ def get_drinks_stats(drinks):
         drink_summary['start'] = daten['start']
         drink_summary['end'] = daten['end']
         drink_summary['total_drinks'] = total_drinks
-        drink_summary['total_promille'] = total_promille
+        drink_summary['total_promille'] = round(total_promille, 3)
         drinks_stats.append(drink_summary)
     drinks_stats = sorted(drinks_stats, key=itemgetter('timestamp'), reverse=True)
     return drinks_stats
-
-
-# def get_drink_list(drinks):
-#     drink_list = []
-#     for timestamp, daten in drinks.items():
-#         gewicht = float(daten['gewicht'])
-#         getraenke = daten["getraenke"]
-#         for drink in getraenke:
-#             anzahl = float(drink['anzahl'])
-#             art = drink["art"]
-#             promille = get_promille(gewicht, drink)
-#             drink_list.append({
-#                 "art": art,
-#                 "anzahl": anzahl,
-#                 "promille": '%.2f' % promille
-#             })
-#     return drink_list
-
-# def get_avg_promille(drinks):
-#     total_promille_dict = {"alles": {"total_promille": 0, "anzahl": 0}}
-#     for timestamp, daten in drinks.items():
-#         gewicht = float(daten['gewicht'])
-#         getraenke = daten["getraenke"]
-#         for drink in getraenke:
-#             anzahl = float(drink['anzahl'])
-#             art = drink["art"]
-#             if art not in total_promille_dict:
-#                 total_promille_dict[art] = {"total_promille": 0, "anzahl": 0}
-#
-#             promille = get_promille(gewicht, drink)
-#             total_promille_dict[art]["total_promille"] += promille
-#             total_promille_dict[art]["anzahl"] += 1
-#             total_promille_dict["alles"]["total_promille"] += promille
-#             total_promille_dict["alles"]["anzahl"] += 1
-#
-#     return total_promille_dict
 
 @app.route("/einzelne")
 def einzelne():
@@ -160,22 +125,6 @@ def einzelne():
             rows.append(row)
     return render_template('einzelne.html', rows=rows)
 
-
-@app.route("/graph", methods=['GET'])
-def graph():
-    with open('daten/saved_drinks.json', 'r') as file: #nicht möglich weil die daten sind nicht in saved_drinks
-        data = json.load(file)
-    x = []
-    y = []
-    for key, value in data.items():
-        x.append(value['timestamp'])
-        y.append(value['total_promille'])
-    x = sorted(x)
-    fig = px.line(x=x, y=y, labels={"x": "Timestamp", "y": "total_promille"})
-    div = plot(fig, output_type="div")
-    return render_template(
-        'graph.html',
-        die_grafik=div)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

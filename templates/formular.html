@@ -186,9 +186,6 @@
                  <li class="nav-item">
                     <a class="nav-link" href="/einzelne">Einzelne Auswertungen</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/graph">Graph</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -196,41 +193,49 @@
 
 
 
-<form action="/neue_eingabe" method="post" autocomplete="off">
+<form action="/neue_eingabe" method="post" autocomplete="off" class="form-horizontal">
     <h2>Hallo {{ name }}, gib bitte deine Daten ein</h2>
     <div class="form-row">
-        <span class="caption"><label for="groesse">Größe in cm <span class="required"></span></label></span>
-        <input type="number" name="groesse" id="groesse" value="180" min="0" step="1" required="required" class="field" />
+        <div class="col-sm-4">
+            <label for="groesse">Größe in cm <span class="required"></span></label>
+            <input type="number" name="groesse" id="groesse" value="180" min="0" step="1" required="required" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <label for="gewicht">Gewicht in kg <span class="required"></span></label>
+            <input type="number" name="gewicht" id="gewicht" value="70" min="0" step="0.1" required="required" class="form-control" />
+        </div>
+        <div class="col-sm-4">
+            <label for="alter">Alter <span class="required"></span></label>
+            <input type="number" name="alter" id="alter" value="25" min="0" step="1" required="required" class="form-control" />
+        </div>
     </div>
-    <div class="form-row">
-        <span class="caption"><label for="gewicht">Gewicht in kg <span class="required"></span></label></span>
-        <input type="number" name="gewicht" id="gewicht" value="70" min="0" step="0.1" required="required" class="field" />
-    </div>
-    <div class="form-row">
-        <span class="caption"><label for="alter">Alter <span class="required"></span></label></span>
-        <input type="number" name="alter" id="alter" value="25" min="0" step="1" required="required" class="field" />
-    </div>
-    <div class="form-row">
-        <span class="caption"><label for="geschlecht">Geschlecht <span class="required"></span></label></span>
-        <select name="geschlecht" id="geschlecht" required="required" class="field">
-            <option value="männlich">männlich</option>
-            <option value="weiblich">weiblich</option>
-            <option value="divers">divers</option>
-        </select>
-    </div>
-
-    <div class="form-row">
+</form>
+<p></p>
+ <div class="form-row">
+    <div class="col-sm-4">
         <h2>Trinkzeiten</h2>
+    </div>
+    <div class="col-sm-4 ">
         <div class="form-row">
-            <span class="caption"><label for="start">Anfang <span class="required">*</span></label></span>
+            <div class="caption">
+                <label for="start">Anfang <span class="required">*</span></label>
+            </div>
             <input type="time" name="start" id="start" value="19:00" maxlength="5" required="required" class="field" />
         </div>
+    </div>
+    <div class="col-sm-4">
         <div class="form-row">
-            <span class="caption"><label for="end">Ende <span class="required">*</span></label></span>
+            <div class="caption">
+                <label for="end">Ende <span class="required">*</span></label>
+            </div>
             <input type="time" name="end" id="end" value="22:00" maxlength="5" required="required" class="field" />
         </div>
+    </div>
+</div>
+<p></p>
+
         <h2>Getränke</h2>
-        <p> für die Eingabe auf jeder Zeile <strong>entweder</strong> die eine oder die <strong>andere</strong> Eingabemöglichkeit.</p>
+        <p> für die Eingabe auf jeder Zeile <strong>muss</strong> eine Zahl und eine Getränkeart eingegeben werden. </p>
         <table>
             <thead>
             <tr>
