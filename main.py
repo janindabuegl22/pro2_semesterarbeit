@@ -1,6 +1,5 @@
 from datetime import datetime
 from operator import itemgetter
-
 from flask import Flask, render_template, request, url_for, redirect
 import random
 import plotly.express as px
@@ -62,8 +61,6 @@ def eingabe():
         else:
             return "Bitte alle Felder ausfüllen." # Sollten nicht alle Felder ausgefüllt sein
     return render_template("formular.html", name="Jan", eingabe_url=url_for('eingabe'))
-
-
 @app.route("/statistik")
 
 def read_saved_drinks():
