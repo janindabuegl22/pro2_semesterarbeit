@@ -1,4 +1,5 @@
 from datetime import datetime
+from operator import itemgetter
 
 from flask import Flask, render_template, request, url_for, redirect
 import random
@@ -6,6 +7,8 @@ import plotly.express as px
 from plotly.offline import plot
 import plotly.graph_objects as go
 import plotly.io as pio
+import json
+
 
 from func.datenbank import read, write
 
@@ -68,7 +71,13 @@ def read_saved_drinks():
         return "No drinks found."
     drinks_stats = get_drinks_stats(drinks)
 
-    return render_template('statistik.html', drinks_stats=drinks_stats)
+    x = [drink_summary['timestamp'] for drink_summary in drinks_stats]
+    y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]
+
+    fig = px.line(x=x, y=y, labels={"x": "timestamp", "y": "total_drinks"})
+    div = plot(fig, output_type="div")
+
+    return render_template('statistik.html', drinks_stats=drinks_stats, die_grafik=div)
 
 
 def get_promille(gewicht, drink):
@@ -90,12 +99,13 @@ def get_drinks_stats(drinks):
         for drink in getraenke:
             total_drinks += float(drink['anzahl'])
             total_promille += get_promille(gewicht, drink)
-        drink_summary['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y, %H:%M')
+        drink_summary['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y')
         drink_summary['start'] = daten['start']
         drink_summary['end'] = daten['end']
         drink_summary['total_drinks'] = total_drinks
         drink_summary['total_promille'] = total_promille
         drinks_stats.append(drink_summary)
+    drinks_stats = sorted(drinks_stats, key=itemgetter('timestamp'), reverse=True)
     return drinks_stats
 
 
@@ -150,20 +160,22 @@ def einzelne():
             rows.append(row)
     return render_template('einzelne.html', rows=rows)
 
+
 @app.route("/graph", methods=['GET'])
 def graph():
-    timestamps = []
-    promille = []
-
-    for drink in read_saved_drinks:
-        timestamps.append(drink['timestamp'])
-        promille.append(drink['total_promille'])
-
-    fig = go.Figure(data=go.Scatter(x=timestamps, y=promille, mode='lines'))
-
-    plot_html = pio.to_html(fig, full_html=False)
-
-    return render_template('graph.html', die_grafik=plot_html)
+    with open('daten/saved_drinks.json', 'r') as file: #nicht möglich weil die daten sind nicht in saved_drinks
+        data = json.load(file)
+    x = []
+    y = []
+    for key, value in data.items():
+        x.append(value['timestamp'])
+        y.append(value['total_promille'])
+    x = sorted(x)
+    fig = px.line(x=x, y=y, labels={"x": "Timestamp", "y": "total_promille"})
+    div = plot(fig, output_type="div")
+    return render_template(
+        'graph.html',
+        die_grafik=div)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

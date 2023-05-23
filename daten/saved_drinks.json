@@ -53,33 +53,6 @@
             }
         ]
     },
-    "2023-05-10 08:11:28.007234": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "12",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "12",
-                "art": "Schnaps"
-            },
-            {
-                "anzahl": "12",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "12",
-                "art": "Bier"
-            }
-        ]
-    },
     "2023-05-10 16:13:01.519991": {
         "groesse": "180",
         "gewicht": "70",
@@ -237,6 +210,58 @@
             {
                 "anzahl": "2",
                 "art": "Sekt"
+            }
+        ]
+    },
+    "2023-05-23 11:45:47.652203": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "geschlecht": "m\u00e4nnlich",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "2",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "1",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "0",
+                "art": "Sekt"
+            },
+            {
+                "anzahl": "1",
+                "art": "Schnaps"
+            }
+        ]
+    },
+    "2023-05-23 15:28:38.100137": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "geschlecht": "m\u00e4nnlich",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "0",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "2",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "3",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "1",
+                "art": "Bier"
             }
         ]
     }

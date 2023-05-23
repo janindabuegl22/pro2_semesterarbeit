@@ -215,6 +215,12 @@
                 <td>{{ drink['total_promille'] }}</td>
             </tr>
         {% endfor %}
+
+    <main class="container">
+        <div class="bg-light p-5 rounded">
+            <h1>Deine Statistik in einem Graph</h1>
+            <p class="lead">{{ die_grafik | safe }}</p>
+        </div>
     </tbody>
 </table>
 

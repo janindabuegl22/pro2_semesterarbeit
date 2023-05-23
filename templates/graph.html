@@ -199,7 +199,7 @@
         </div>
 
         <form id="data-form" action="{{ url_for('graph') }}" method="POST">
-            {% for drink in drinks_stats %}
+            {% for drink in saved_drinks %}
                 <input type="hidden" name="timestamps[]" value="{{ drink['timestamp'] }}">
                 <input type="hidden" name="promille[]" value="{{ drink['total_promille'] }}">
             {% endfor %}
