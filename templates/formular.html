@@ -194,7 +194,8 @@
 
 
 <form action="/neue_eingabe" method="post" autocomplete="off" class="form-horizontal">
-    <h2>Hallo {{ name }}, gib bitte deine Daten ein</h2>
+    <h2>Hallo {{ name }}, gib bitte deine Daten ein</h2>        <!-- Wird in Main, Zeile 63 definiert -->
+
     <div class="form-row">
         <div class="col-sm-4">
             <label for="groesse">Größe in cm <span class="required"></span></label>
@@ -246,12 +247,12 @@
             </tr>
             </thead>
             <tbody>
-            {% for i in range(4) %}
+            {% for i in range(4) %}     <!-- Schleife, damit derselbe Code nicht 4x Getränke eingegeben werden muss. -->
             <tr>
-                <td class="v-md-tc tc">{{ i+1 }}</td>
-                <td><input type="number" name="anzahl[]" min="0" step="1" class="field" /></td>
+                <td class="v-md-tc tc">{{ i+1 }}</td>   <!-- Das i in der Scheife wird jedes Mal um 1 grösser, damit die Schleife bei 4 aufhört -->
+                <td><input type="number" name="anzahl[]" min="0" step="1" class="field" /></td> <!-- Hier kann angegeben werden, wie viele Getränke  -->
                 <td>
-                    <select name="art[]" class="field">
+                    <select name="art[]" class="field"> <!-- Dropdown -->
                         <option value="">Bitte auswählen</option>
                         <option value="Bier">Bier</option>
                         <option value="Wein">Wein</option>
@@ -260,7 +261,7 @@
                     </select>
                 </td>
             </tr>
-            {% endfor %}
+            {% endfor %} <!-- Schleife wird gelöst -->
             </tbody>
         </table>
     </div>

@@ -202,13 +202,13 @@
         </tr>
     </thead>
     <tbody>
-        {% for drink in drinks_stats %}
+        {% for drink_summary in drinks_stats %}
             <tr>
-                <td>{{ drink['timestamp'] }}</td>
-                <td>{{ drink['start'] }}</td>
-                <td>{{ drink['end'] }}</td>
-                <td>{{ drink['total_drinks'] }}</td>
-                <td>{{ drink['total_promille'] }}</td>
+                <td>{{ drink_summary['timestamp'] }}</td>
+                <td>{{ drink_summary['start'] }}</td>
+                <td>{{ drink_summary['end'] }}</td>
+                <td>{{ drink_summary['total_drinks'] }}</td>
+                <td>{{ drink_summary['total_promille'] }}</td>
             </tr>
         {% endfor %}
 

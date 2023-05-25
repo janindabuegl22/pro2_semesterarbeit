@@ -4,7 +4,7 @@ from flask import Flask, render_template, request, url_for, redirect
 import random
 import plotly.express as px
 from plotly.offline import plot
-
+import json
 
 
 from func.datenbank import read, write
@@ -13,6 +13,15 @@ app = Flask(__name__)
 
 latest_drink_record = {}
 
+def get_beer_count():
+    with open('daten/saved_drinks.json', 'r') as file:
+        drinks_data = json.load(file)
+    beer_count = 0
+    for data in drinks_data.values():
+        for drink in data['getraenke']:
+            if drink['art'] == 'Bier':
+                beer_count += int(drink['anzahl'])
+    return beer_count
 
 @app.route("/home")
 def index():
@@ -21,7 +30,8 @@ def index():
     # Render die Template-Datei "index.html" und übergebe den Wert für die Variable "name" als "Jan".
     # Zusätzlich wird die URL für die Funktion "eingabe" erzeugt und als "eingabe_url" übergeben.
     # Ein Getränk wird aus der Liste "drinkoftheday" ausgewählt und an das Template übergeben.
-    return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), drinkoftheday=random.choice(drinkoftheday))
+    bier_counter = get_beer_count()
+    return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), drinkoftheday=random.choice(drinkoftheday), bier_counter=bier_counter)
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
 def eingabe():
@@ -62,19 +72,15 @@ def eingabe():
             return "Bitte alle Felder ausfüllen." # Sollten nicht alle Felder ausgefüllt sein
     return render_template("formular.html", name="Jan", eingabe_url=url_for('eingabe'))
 @app.route("/statistik")
-
 def read_saved_drinks():
     drinks = read('daten/saved_drinks.json')    # Lesen der Daten in saved_drinks
     if not drinks:                              # Wenn keine Drinks vorhanden sind, dann wird das returned
         return "No drinks found."
     drinks_stats = get_drinks_stats(drinks)     # Wenn Variabel nicht leer ist, wird get_drink_stats aufgerufen. Das Ergebnis wird an drink_stats gesendet.
-
     x = [drink_summary['timestamp'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
     y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
-
     fig = px.line(x=x, y=y, labels={"x": "Datum", "y": "Gesamthafte Getränke"})     # Festlegen der Variabeln (verbal)
     div = plot(fig, output_type="div")
-
     return render_template('statistik.html', drinks_stats=drinks_stats, die_grafik=div)
 
 
@@ -106,21 +112,22 @@ def get_drinks_stats(drinks):
     drinks_stats = sorted(drinks_stats, key=itemgetter('timestamp'), reverse=True)
     return drinks_stats
 
+
 @app.route("/einzelne")
 def einzelne():
-    global latest_drink_record
+    global latest_drink_record # Globale Variable wird aufgerufen
 
-    daten = latest_drink_record
-    rows = []
-    if daten:
-        gewicht = float(daten['gewicht'])
-        uhrzeit = daten['start']
-        getraenke = daten['getraenke']
-        for drink in getraenke:
-            promille = get_promille(gewicht, drink)
-            row = [drink['art'], drink['anzahl'], uhrzeit, promille]
-            rows.append(row)
-    return render_template('einzelne.html', rows=rows)
+    daten = latest_drink_record # Der globalen Variable wird die Bezeichnung Daten zugewiesen. Einfacher zu schreiben unten
+    rows = []                   # Es wird eine Liste definiert, die in einzelne.html dann aufgerufen wird
+    if daten:                   # Wenn Variable daten einen Wert hat (hat sie, aus latest_drink_record)
+        gewicht = float(daten['gewicht'])   # Extrahieren der Daten Gewicht
+        uhrzeit = daten['start']            # Extrahieren der Daten Start
+        getraenke = daten['getraenke']      # Extrahieren der Daten Getränke
+        for drink in getraenke:             # Weil es mehrere Getränke gibt und auch Anzahl verschieden
+            promille = get_promille(gewicht, drink)     # Funktion von oben wird hier eingesetzt
+            row = [drink['art'], drink['anzahl'], uhrzeit, promille]    # row wird vorbereitet
+            rows.append(row)                                            # rows erhält einzelne row
+    return render_template('einzelne.html', rows=rows)                  # rows werden übergeben
 
 
 if __name__ == "__main__":
