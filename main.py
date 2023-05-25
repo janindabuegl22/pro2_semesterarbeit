@@ -10,41 +10,22 @@ app = Flask(__name__)
 
 latest_drink_record = {}
 
-@app.route("/getränke_counter", methods=["POST"])
-def getränke_counter():
-    selected_drink = request.form.get("drink")
-    beer_count = get_drink_count(selected_drink)
-    return render_template("result.html", drink=selected_drink, count=beer_count)
+@app.route("/home", methods=["GET", "POST"])
+def home():
+    if request.method == "POST":
+        selected_drink = request.form.get("drink")
+        drink_count = get_drink_count(selected_drink)
+        return render_template("index.html", drink=selected_drink, count=drink_count)
+    else:
+        drinkoftheday = random.choice(["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"])
+        beer_count = get_drink_count("Bier")
+        return render_template("index.html", drinkoftheday=drinkoftheday, bier_counter=beer_count)
 
 def get_drink_count(drink):
     with open('daten/saved_drinks.json', 'r') as file:
         drinks_data = json.load(file)
-    drink_count = 0
-    for data in drinks_data.values():
-        for d in data['getraenke']:
-            if d['art'] == drink:
-                drink_count += int(d['anzahl'])
+    drink_count = sum(int(d['anzahl']) for data in drinks_data.values() for d in data['getraenke'] if d['art'] == drink)
     return drink_count
-
-def get_beer_count():
-    with open('daten/saved_drinks.json', 'r') as file:
-        drinks_data = json.load(file)
-    beer_count = 0
-    for data in drinks_data.values():
-        for drink in data['getraenke']:
-            if drink['art'] == 'Bier':
-                beer_count += int(drink['anzahl'])
-    return beer_count
-
-@app.route("/home")
-def index():
-    # Eine Liste von Getränken
-    drinkoftheday = ["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"]
-    # Render die Template-Datei "index.html" und übergebe den Wert für die Variable "name" als "Jan".
-    # Zusätzlich wird die URL für die Funktion "eingabe" erzeugt und als "eingabe_url" übergeben.
-    # Ein Getränk wird aus der Liste "drinkoftheday" ausgewählt und an das Template übergeben.
-    bier_counter = get_beer_count()
-    return render_template("index.html", name="Jan", eingabe_url=url_for('eingabe'), drinkoftheday=random.choice(drinkoftheday), bier_counter=bier_counter)
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
 def eingabe():
