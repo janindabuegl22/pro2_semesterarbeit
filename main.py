@@ -5,13 +5,26 @@ import random
 import plotly.express as px
 from plotly.offline import plot
 import json
-
-
 from func.datenbank import read, write
-
 app = Flask(__name__)
 
 latest_drink_record = {}
+
+@app.route("/getränke_counter", methods=["POST"])
+def getränke_counter():
+    selected_drink = request.form.get("drink")
+    beer_count = get_drink_count(selected_drink)
+    return render_template("result.html", drink=selected_drink, count=beer_count)
+
+def get_drink_count(drink):
+    with open('daten/saved_drinks.json', 'r') as file:
+        drinks_data = json.load(file)
+    drink_count = 0
+    for data in drinks_data.values():
+        for d in data['getraenke']:
+            if d['art'] == drink:
+                drink_count += int(d['anzahl'])
+    return drink_count
 
 def get_beer_count():
     with open('daten/saved_drinks.json', 'r') as file:
