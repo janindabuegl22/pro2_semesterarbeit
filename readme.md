@@ -1,49 +1,44 @@
- **- Warum dieses Projekt **
+#  Promillebrille - *Deine Promilledokumentation*
+
+## Warum dieses Projekt
 Meine Projektidee umfasst ein Tool, um zu testen, wie viel Alkohol man nach einer gewissen Anzahl Getränke im Blut hat.
 Der Grund für dieses Projekt war, eine Plattform zu haben, welche mir anzeigt, wie oft ich Alkohol trinke und wie 
 hoch mein Promillewert jeweils ist. 
 
- - Welches Problem löst das Projekt
+## Welches Problem löst das Projekt
 Das Projekt löst das Problem des Unwissens des Promillewerts, wenn man Alkohol trinkt. Zudem löst es das Problem
 fehlender Dokumentation des Alkoholkonsums. 
 
- - Was macht das Projekt
+## Was macht das Projekt
 Das Projekt bietet die Möglichkeit, die konsumierten alkoholischen Getränke zu erfassen und zu dokumentieren. Dabei
 wird sofort berechnet, wie hoch der aktuelle Promillegehalt im Blut ist. Das Projekt nimmt die Getränke entgegen, 
 berechnet den Promillegehalt pro Getränkeart, speichert den Gesamtpromillegehalt und dokumentiert diesen zusammen mit dem 
 aktuellen Tagesdatum in einer Tabelle und in einem Graph. 
 
+## Betrieb
+Um das Projekt auszuführen, muss die Datei "main.py" ausgeführt werden. Promillebrille verwendet Plotly. Dies muss vor Benutzung 
+installiert werden. Sonst wird die Grafik nicht angezeigt. Das Projekt läuft über den Port 5001. 
+Wenn auf diesem Port andere Dinge ausgeführt werden, sollte das geändert werden, um Komplikationen zu vermeiden.
 
-zuerst habe ich in main flask importiert: from flask import flask
-danach habe ich eine App erstellt und dieses nach meinem Projekt benannt. 
-Ein Decorator ist etwas, bei dem ein App davor steht, dann irgend ein Code kommt und darunter die Funktion steht. 
-App Decorator sagt "ich mache etwas spezielles mit der Funktion"
-Die Funktion im Decorator zeigt, was mit dieser App passiert. So wird in meinem Beispiel Index ausgeführt. 
-Ich gebe return und "Hallo Flask" ein, damit dies dann im Browser angezeigt wird. 
-@app zeigt mir, wohin das soll
-der Link unten zeigt uns, was dort passieren soll. 
-Danach habe ich zwei weitere Apps erstellt, die die Seite für eine neue Eingabe und die Seite für die Statistik darstellen. 
-Danach habe ich eine Indexdatei mit Html Code erstellt. 
-Render Template ist eine Funktion von Flask, die ich importiert habe. 
-render_template ist eine Funktion in Flask, die verwendet wird, um eine HTML-Vorlage (Template) mit dynamischen Daten zu rendern und als HTTP-Antwort zurückzugeben.
+## Wie wird das Projekt benutzt
+Nachdem main.py ausgeführt wurde, gelangt man auf die auf die Startseite. Diese wird **home** genannt. 
+In der Navigation werden folgende Seite angezeigt: Home, Neue Eingabe, Statistik, Einzelne Auswertungen. 
+Auf der **Startseite** kann der User bereits einige Informationen erhalten. So wird ihm mit einer Zufallsfunktion das Getränk des Tages angezeigt. 
+Zudem kann der User ersehen, wie viel Getränke einer Art er bereits im Programm gespeichert hat bzw. getrunken hat. 
+Über den blauen Button "Neues Getränk" kann der User eingeben, was er gerade getrunken hat. 
 
-**jinja codes sind doppelt geschweifte Klammern ({})**
-eine Variable namens "Name definitert man im Jinja so: {{ name }}!
-Wenn ich Hallo und {{ name }}! im Html Code Index eingebe, wird ein Hallo mit PLatzhalter ausgegeben. 
-Ich muss also in der App ein render template mit der Verbindung zum Namen machen (name=Jan).
+Auf der Seite **neue Eingabe** kann der User seine persönlichen Daten und die konsumierten Getränke eingeben. Durch diese Angaben kann der etwaige Promillegehalt
+berechnet werden. Der User kann zwischen 4 verschiedenen Getränkearten auswählen: Bier, Wein, Sekt und Schnaps. Durch das Klicken auf Absenden wird der
+Promillegehalt je Getränk berechnet und der User wird automatisch auf die Seite **Einzelne Auswertung** weitergeleitet. Wird ein Feld nicht ausgefüllt, erscheint die Meldung, dass alle Felder ausgefüllt werden müssen.  
 
-Danach habe ich eine neue html datei erstellt. Diese soll für das Fenster "Neue Eingabe" dienen. 
-In diesem Fenster kann man seinen neusten Alkoholkonsum erfassen. Und es gibt einen sich jeweils ändernden Spruch. 
-Danach habe ich ein css dokument erstellt, um den Titel meines Textex grün zu machen. Mit den Daten der Unterrichtsfolien 
-habe ich dann copy paste gemacht und den filenamen angepasst. 
-Um eine CSS Datei in unser HTML zu laden, müssen wir den Pfad zur CSS-Datei mit dem Befehl url_for erstellen. 
-Die url_for-Funktion erstellt eine URL, die auf die Funktion oder den Endpunkt innerhalb der Anwendung verweist, anstatt eine URL manuell zu erstellen oder hartcodiert in den HTML-Code einzufügen. 
+Auf der Seite **Einzelne Auswertung** wird dem User angezeigt, wie viele Getränke pro Getränkeart er konsumiert hat und wie viel Promille jede Getränkeart aktuell in sein Blut geführt hat. Wird **Einzelen Auswertung** über die Navigationsbar aufgerufen, bevor Getränke eingegeben wurden, wird folgender Satz angezeigt: **Noch sind keine Getränek vorhanden**. Zudem erscheint der blaue Button wie auf der Startseite ("Neues Getränk"). 
 
-Flask verwendet sogenannte Routen, um URLs mit Funktionen in Ihrem Code zu verknüpfen. 
-Wenn Sie eine Route definieren, gibt Flask an, welche Funktion aufgerufen werden soll, wenn der Benutzer auf eine bestimmte URL zugreift. In Ihrem Code haben Sie beispielsweise die Route "/neue_eingabe" definiert:
+Auf der Seite **Statistik** werden die einzelnen Getränke- und Promilledatei addiert und als Momentaufnahme je Timelineeintrag gespeichert. Hier sieht der User also die Gesamtzahl an Getränke und die daraus folgende Promilleanzahl. Zudem wird ihm ein Graph angezeigt. Dieser zeigt die History der Trinkdaten und der Anzahl Getränke. Wurden beispielsweise an einem Tag 15 Bier, 4 Sekt und 2 Gläser Wein getrunken, zeigt der Graph 21 Getränke an diesem Tag an. 
 
-**hallo**
-Input gibt uns immer einen String zurück (text)
+
+## Was wurde nicht gelöst
+Es war mir nicht möglich, zu programmieren, dass nicht jedes Feld der Getränke auf der Seite **neue Eingabe** ausgefüllt werden muss. Dies muss noch verbessert werden. Zudem möchte ich noch verbessern, dass bei mehreren Eingaben am gleichen Tag die Getränke und Promillewerte addiert werden und dem Graph übergeben werden. Aktuell werden diese einzeln angezeigt, was zu einer Verfälschung der Statistik führt. 
+
 
 ```mermaid
 graph TD;
