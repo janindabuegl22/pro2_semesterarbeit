@@ -10,16 +10,15 @@ app = Flask(__name__)
 
 latest_drink_record = {}
 
-@app.route("/home", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
         selected_drink = request.form.get("drink")
         drink_count = get_drink_count(selected_drink)
-        return render_template("index.html", drink=selected_drink, count=drink_count)
+        return render_template("index.html", drink=selected_drink, drink_count=drink_count)
     else:
         drinkoftheday = random.choice(["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"])
-        beer_count = get_drink_count("Bier")
-        return render_template("index.html", drinkoftheday=drinkoftheday, bier_counter=beer_count)
+        return render_template("index.html", drinkoftheday=drinkoftheday)
 
 def get_drink_count(drink):
     with open('daten/saved_drinks.json', 'r') as file:
