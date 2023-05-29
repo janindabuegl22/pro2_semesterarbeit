@@ -414,5 +414,30 @@
                 "art": "Wein"
             }
         ]
+    },
+    "2023-05-26 14:30:24.046711": {
+        "groesse": "164",
+        "gewicht": "49",
+        "alter": "18",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "1",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "0",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "1",
+                "art": "Schnaps"
+            },
+            {
+                "anzahl": "4",
+                "art": "Sekt"
+            }
+        ]
     }
 }

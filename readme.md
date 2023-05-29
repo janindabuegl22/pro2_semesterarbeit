@@ -31,3 +31,9 @@ Wenn Sie eine Route definieren, gibt Flask an, welche Funktion aufgerufen werden
 
 **hallo**
 Input gibt uns immer einen String zurück (text)
+
+```mermaid
+graph TD;
+    A-->B;
+    B-->C;
+    C-->D;
