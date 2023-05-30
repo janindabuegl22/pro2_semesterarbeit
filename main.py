@@ -64,6 +64,7 @@ def eingabe():
         else:
             return "Bitte alle Felder ausfüllen." # Sollten nicht alle Felder ausgefüllt sein
     return render_template("formular.html", name="Jan", eingabe_url=url_for('eingabe'))
+
 @app.route("/statistik")
 def read_saved_drinks():
     drinks = read('daten/saved_drinks.json')    # Lesen der Daten in saved_drinks
@@ -72,6 +73,8 @@ def read_saved_drinks():
     drinks_stats = get_drinks_stats(drinks)     # Wenn Variabel nicht leer ist, wird get_drink_stats aufgerufen. Das Ergebnis wird an drink_stats gesendet.
     x = [drink_summary['timestamp'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
     y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]  # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
+    x.reverse()  # Umkehren der Liste x
+    y.reverse()  # Umkehren der Liste y
     fig = px.line(x=x, y=y, labels={"x": "Datum", "y": "Gesamthafte Getränke"})     # Festlegen der Variabeln (verbal)
     div = plot(fig, output_type="div")
     return render_template('statistik.html', drinks_stats=drinks_stats, die_grafik=div)

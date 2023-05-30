@@ -314,5 +314,55 @@
                 "art": "Sekt"
             }
         ]
+    },
+    "2023-05-30 14:25:48.112454": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "start": "19:00",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "0",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "2",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "3",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "2",
+                "art": "Wein"
+            }
+        ]
+    },
+    "2023-05-30 14:53:46.835833": {
+        "groesse": "180",
+        "gewicht": "70",
+        "alter": "25",
+        "start": "00:04",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "2",
+                "art": "Sekt"
+            },
+            {
+                "anzahl": "0",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "2",
+                "art": "Sekt"
+            },
+            {
+                "anzahl": "3",
+                "art": "Schnaps"
+            }
+        ]
     }
 }
