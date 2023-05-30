@@ -364,5 +364,30 @@
                 "art": "Schnaps"
             }
         ]
+    },
+    "2023-05-30 18:31:43.515588": {
+        "groesse": "185",
+        "gewicht": "70",
+        "alter": "25",
+        "start": "19:04",
+        "end": "22:00",
+        "getraenke": [
+            {
+                "anzahl": "8",
+                "art": "Bier"
+            },
+            {
+                "anzahl": "2",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "1",
+                "art": "Wein"
+            },
+            {
+                "anzahl": "3",
+                "art": "Bier"
+            }
+        ]
     }
 }
