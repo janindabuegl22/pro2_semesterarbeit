@@ -75,7 +75,7 @@ def read_saved_drinks():
     y.reverse()
     fig = px.bar(x=x, y=y, labels={"x": "Datum", "y": "Gesamthafte Getränke"})                                              # Festlegen der Variabeln (verbal)
     div = plot(fig, output_type="div")
-    return render_template('statistik.html', drinks_stats=drinks_stats, die_grafik=div)
+    return render_template('statistik.html', name="Jan", drinks_stats=drinks_stats, die_grafik=div)
 
 def get_promille(gewicht, drink):                                                                                           # Die Berechnung wurde in einem neuen def gemacht, weil sonst die anderen defs zu lang geworden wären.
     vol = {"Bier": 0.05, "Wein": 0.12, "Sekt": 0.11, "Schnaps": 0.40}
@@ -90,18 +90,18 @@ def get_drinks_stats(drinks):                                                   
         total_drinks = 0
         total_promille = 0
         drink_summary = {}                                                                                                  # Weil values und keys vorhanden sind, macht es Sinn, ein dict zu erstellen
-        gewicht = float(daten['gewicht'])
+        gewicht = float(daten['gewicht'])                                                                                   # in def get_drink_stats, weil so nicht jedes Getränk einzeln berücksichtigt wird, sondern ein Datensatz an Getränken
         getraenke = daten['getraenke']
-        for drink in getraenke:
+        for drink in getraenke:                                                                                             # Weil Anzahl in Getraenke verschachtelt ist, muss ich for Schleife machen
             total_drinks += float(drink['anzahl'])
             total_promille += get_promille(gewicht, drink)
-        drink_summary['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y')
+        drink_summary['timestamp'] = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S.%f').strftime('%d/%m/%Y')              # Alle Daten werden in einem Dict gespeichert, weil es so einfacher ist, mit ihrem Key auf die Daten zuzugreifen.
         drink_summary['start'] = daten['start']
         drink_summary['end'] = daten['end']
         drink_summary['total_drinks'] = total_drinks
         drink_summary['total_promille'] = round(total_promille, 3)
         drinks_stats.append(drink_summary)
-    drinks_stats = sorted(drinks_stats, key=itemgetter('timestamp'), reverse=True)
+    drinks_stats = sorted(drinks_stats, key=itemgetter('timestamp'), reverse=True)                                          # Quelle: Stackoverflow
     return drinks_stats                                                                                                     # Die Liste, die mit den dicts mit allen Datei gefüllt ist, wird nun wieder nach def read_saved_drinks() returned
 
 @app.route("/einzelne")
@@ -117,7 +117,7 @@ def einzelne():
             promille = get_promille(gewicht, drink)                                                                         # Funktion von oben wird hier eingesetzt
             row = [drink['art'], drink['anzahl'], uhrzeit, promille]                                                        # row wird vorbereitet
             rows.append(row)                                                                                                # rows erhält einzelne row
-    return render_template('einzelne.html', rows=rows)                                                                      # rows werden übergeben
+    return render_template('einzelne.html', name="Jan", rows=rows)                                                          # rows werden übergeben
 
 
 if __name__ == "__main__":
