@@ -19,6 +19,7 @@ aktuellen Tagesdatum in einer Tabelle und in einem Graph.
 Um das Projekt auszuführen, muss die Datei "main.py" ausgeführt werden. Promillebrille verwendet Plotly. Dies muss vor Benutzung 
 installiert werden. Sonst wird die Grafik nicht angezeigt. Das Projekt läuft über den Port 5001. 
 Wenn auf diesem Port andere Dinge ausgeführt werden, sollte das geändert werden, um Komplikationen zu vermeiden.
+Information zu den Kommentaren: Die Kommentare sind auch beschreibender Natur, weil ich den Code und seine einzelnen Berechnungen besser verstehe. 
 
 ## Wie wird das Projekt benutzt
 Nachdem main.py ausgeführt wurde, gelangt man auf die auf die Startseite. Diese wird **home** genannt. 

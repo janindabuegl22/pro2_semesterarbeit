@@ -68,9 +68,9 @@ def read_saved_drinks():
     drinks = read('daten/saved_drinks.json')                                                                                # Lesen der Daten in saved_drinks
     if not drinks:                                                                                                          # Wenn keine Drinks vorhanden sind, dann wird das returned
         return "No drinks found."
-    drinks_stats = get_drinks_stats(drinks)                                                                                 # Wenn Variabel nicht leer ist, wird get_drink_stats aufgerufen. Das Ergebnis wird an drink_stats gesendet.
-    x = [drink_summary['timestamp'] for drink_summary in drinks_stats]                                                      # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
-    y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]                                                   # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 107 hinzugefügt
+    drinks_stats = get_drinks_stats(drinks)                                                                                 # Wenn Variabel nicht leer ist, wird get_drink_stats aufgerufen. Das Ergebnis wird an drink_stats returned.
+    x = [drink_summary['timestamp'] for drink_summary in drinks_stats]                                                      # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 103 hinzugefügt
+    y = [drink_summary['total_drinks'] for drink_summary in drinks_stats]                                                   # Variabeln für Graph werden festgelegt. Aus dem dict drink_summary wird eine Variabel genommen. Wird in Zeile 103 hinzugefügt
     x.reverse()
     y.reverse()
     fig = px.bar(x=x, y=y, labels={"x": "Datum", "y": "Gesamthafte Getränke"})                                              # Festlegen der Variabeln (verbal)
