@@ -39,6 +39,7 @@ Auf der Seite **Statistik** werden die einzelnen Getränke- und Promilledatei ad
 
 ## Was wurde nicht gelöst
 Es war mir nicht möglich, zu programmieren, dass nicht jedes Feld der Getränke auf der Seite **neue Eingabe** ausgefüllt werden muss. Dies muss noch verbessert werden. Zudem möchte ich noch verbessern, dass bei mehreren Eingaben am gleichen Tag die Getränke und Promillewerte addiert werden und dem Graph übergeben werden. Aktuell werden diese einzeln angezeigt, was zu einer Verfälschung der Statistik führt. 
+Was zudem nicht möglich ist, ist eine Eingabe eines eigenen Datums. Es wird einfach der Timestamp genommen.
 
 ## Folglich wird die Architektur meiner Seite aufgezeigt:
 

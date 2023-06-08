@@ -1,271 +1,30 @@
 {
-    "2023-05-09 17:51:10.351380": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
+    "2023-06-08 21:50:00.629448": {
+        "groesse": "181",
+        "gewicht": "69.1",
+        "alter": "28",
         "start": "19:00",
         "end": "22:00",
         "getraenke": [
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "1",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "1",
-                "art": "Schnaps"
-            }
-        ]
-    },
-    "2023-05-09 18:01:48.558268": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "2",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "2",
-                "art": "Schnaps"
-            }
-        ]
-    },
-    "2023-05-10 16:13:01.519991": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "3",
-                "art": "Sekt"
-            },
             {
                 "anzahl": "4",
-                "art": "Schnaps"
-            }
-        ]
-    },
-    "2023-05-11 17:28:28.136997": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "1",
                 "art": "Bier"
             },
             {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            }
-        ]
-    },
-    "2023-05-11 17:32:11.862644": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "1",
+                "anzahl": "44",
                 "art": "Wein"
             },
             {
                 "anzahl": "1",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "1",
-                "art": "Wein"
-            }
-        ]
-    },
-    "2023-05-12 18:35:07.780235": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "mageninhalt": "empty",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "8",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            }
-        ]
-    },
-    "2023-05-18 13:12:57.365693": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "0",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "0",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            }
-        ]
-    },
-    "2023-05-21 10:38:45.260735": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            }
-        ]
-    },
-    "2023-05-23 11:45:47.652203": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "2",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "0",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "1",
-                "art": "Schnaps"
-            }
-        ]
-    },
-    "2023-05-23 15:28:38.100137": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "geschlecht": "m\u00e4nnlich",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "0",
                 "art": "Bier"
             },
             {
                 "anzahl": "2",
                 "art": "Wein"
-            },
-            {
-                "anzahl": "3",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "1",
-                "art": "Bier"
             }
         ]
     },
-    "2023-05-23 16:05:04.064406": {
+    "2023-06-08 21:53:54.045795": {
         "groesse": "180",
         "gewicht": "70",
         "alter": "25",
@@ -277,136 +36,11 @@
                 "art": "Bier"
             },
             {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "2",
-                "art": "Bier"
-            }
-        ]
-    },
-    "2023-05-23 18:44:10.106383": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "2",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "2",
-                "art": "Schnaps"
-            },
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            }
-        ]
-    },
-    "2023-05-30 14:25:48.112454": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
                 "anzahl": "0",
                 "art": "Bier"
             },
             {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "3",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            }
-        ]
-    },
-    "2023-05-30 14:53:46.835833": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "start": "00:04",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "0",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Sekt"
-            },
-            {
-                "anzahl": "3",
-                "art": "Schnaps"
-            }
-        ]
-    },
-    "2023-05-30 18:31:43.515588": {
-        "groesse": "185",
-        "gewicht": "70",
-        "alter": "25",
-        "start": "19:04",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "8",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "1",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "3",
-                "art": "Bier"
-            }
-        ]
-    },
-    "2023-06-06 18:06:24.068657": {
-        "groesse": "180",
-        "gewicht": "70",
-        "alter": "25",
-        "start": "19:00",
-        "end": "22:00",
-        "getraenke": [
-            {
-                "anzahl": "1",
-                "art": "Bier"
-            },
-            {
-                "anzahl": "2",
-                "art": "Wein"
-            },
-            {
-                "anzahl": "3",
+                "anzahl": "12",
                 "art": "Wein"
             },
             {
