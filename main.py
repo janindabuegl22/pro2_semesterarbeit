@@ -7,7 +7,7 @@ from func.datenbank import read, write
 
 app = Flask(__name__)
 latest_drink_record = {}                                                                                                    # Eine Globale Vaiable habe ich definiert, weil es einfach ist, diese von überall zu befüllen aufzurufen. Solange die globale Variable nur vereinzelt benutzt wird (in meinem Fall nur beim der Eingabe neuer Daten und als Hilfe beim Anzeigen der einzelnen Getränke) macht sie keine Probleme. Quelle: Youtubevideo
-
+                                                                                                                            # Die globale Variabel wird nur für die Berechnung der einzelnen Getränkepromille genutzt. So erspare ich mir eine neue Json Datei.
 @app.route("/", methods=["GET", "POST"])
 def home():
     drinkoftheday = random.choice(["Bier", "Gin Tonic", "Braulio", "Rotwein", "Weisswein", "Wasser"])                       # Habe ich so im Unterricht gelernt
@@ -29,7 +29,7 @@ def get_drink_count(drink):                                                     
 
 @app.route("/neue_eingabe", methods=["GET", "POST"])
 def eingabe():
-    global latest_drink_record                                                                                              # Ich rufe die globale Variabel auf
+    global latest_drink_record                                                                                              # Ich rufe die globale Variabel auf, um die Werte, die ich dann eingebe, in dieser Variabel zu speichern.
     if request.method == "POST":
         groesse = request.form.get('groesse')                                                                               # Wert des Formularfelds 'groesse' abrufen
         gewicht = request.form.get('gewicht')                                                                               # Wert des Formularfelds 'gewicht' abrufen
